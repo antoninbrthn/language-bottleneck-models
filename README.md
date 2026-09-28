@@ -313,3 +313,14 @@ bash src/educdm_integration/run_experiments.sh
 ├── requirements.txt
 └── .gitignore
 ```
+
+
+# Citation
+```
+@article{berthon2025language,
+  title={Language Bottleneck Models for Qualitative Knowledge State Modeling},
+  author={Berthon, Antonin and van der Schaar, Mihaela},
+  journal={arXiv preprint arXiv:2506.16982},
+  year={2025}
+}
+```
