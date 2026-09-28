@@ -1,0 +1,78 @@
+# Intended use: Train a decoder LBM on XES3G5MFiltered dataset with script `train_decoder.py`
+
+dataset:
+  name: XES3G5MFiltered
+  min_trajectory_length: 34  # Default value, adjust as necessary
+  max_trajectory_length: 34
+  n_y_prompts: 4
+  max_context_length: 4096  # nb of tokens in context
+  max_n_trajectories: 1000  # nb of trajectories to load: 800 train/200 test
+  # Optional parameters for filtering
+  session_gap_minutes: 10  # Maximum allowed gap between two consecutive answers (minutes)
+  min_session_questions: 34  # Minimum questions required in a (user, session) group
+  use_translation: True
+  use_test_window: False
+  limit_nrows: null
+  data_checkpoint_path: "{{DATA_DIR}}/XES3G5MFiltered"
+  encoder_output_path: "{{DATA_DIR}}/XES3G5MFiltered/encoder_outputs/gemma12b/evaluation_results.csv"  # gemma3-12b annotations
+
+model:
+  type: lbm
+  max_bottleneck_tokens: 512  # default: 128
+  encoder:
+    name: gpt2
+    type: "hf"
+    use_cot: False
+    max_cot_tokens: 1024
+  decoder:
+    name: google/gemma-3-12b-it
+    attn_implementation: "eager"
+    use_cot: False
+    max_cot_tokens: 1024
+  
+
+training:
+  num_train_epochs: 5
+  per_device_train_batch_size: 1
+  per_device_eval_batch_size: 1
+  gradient_accumulation_steps: 8 
+  learning_rate: 1e-4
+  logging_strategy: 'steps'
+  logging_steps: 10  
+  eval_strategy: 'epoch'
+  do_eval: True
+  ### save/checkpointing
+  save_strategy: 'epoch'
+  save_total_limit: 1
+  load_best_model_at_end: True
+  logging_dir: ./logs
+  #### mixed precision params
+  tf32: False
+  bf16: False
+  fp16: False
+  #### optim params
+  optim: adamw_torch  
+  #### other speed/memory tradeoffs
+  gradient_checkpointing: False  # reduce memory but slow down training
+  torch_compile: False  # compile the model for potentially faster training
+
+evaluation:
+  batch_size: 10
+  eval_before: True  # Evaluate the model before training
+
+lora_config:
+  r: 16
+  lora_alpha: 16
+  target_modules: 
+    - "q_proj"
+    - "k_proj"
+    - "v_proj"
+    - "o_proj"
+    - "gate_proj"
+    - "up_proj"
+    - "down_proj"
+  lora_dropout: 0.05
+  bias: "none"
+  task_type: "CAUSAL_LM"
+
+wandb_tags: ["train-decoder-xes"]

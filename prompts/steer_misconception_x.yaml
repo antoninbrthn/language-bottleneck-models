@@ -1,0 +1,16 @@
+template: |
+  Please produce a concise summary of the following input with up to {max_words} words. 
+  This summary should contain the information required to predict the student's answer to any new question.
+  
+  Make sure to mention any misconception held by the student.  
+  {cot_instruction}
+
+  Input:
+  {input_text}
+  
+  Once again, please provide a **concise** summary of the student's knowledge state.
+  {cot_instruction}
+  Keep your summary under {max_words} words. 
+
+
+  

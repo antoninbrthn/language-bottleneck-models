@@ -1,0 +1,27 @@
+dataset:
+  name: synthetic-11  # synthetic-<N> for synthetic datasets
+  min_trajectory_length: 101  # Default value, adjust as necessary
+  max_trajectory_length: 101  # Number of q wanted in input + n_y_prompts
+  n_y_prompts: 1 # number of new questions to predict. default: 1
+  max_context_length: 2048  # nb of tokens in context
+  max_n_trajectories: 1000  # 4/5 train, 1/5 test
+
+
+model:
+  type: lbm
+  max_bottleneck_tokens: 128  # default: 128
+  encoder:
+    name: ground-truth
+    use_cot: True
+    max_cot_tokens: 1024
+  decoder:
+    name: gpt-4o-mini
+    use_cot: True
+    max_cot_tokens: 1024
+
+evaluation:
+  batch_size: 50
+  export_results: True
+  export_path: "results/model_outputs"
+
+wandb_tags: ['p0b-1']

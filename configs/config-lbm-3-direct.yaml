@@ -1,0 +1,22 @@
+dataset:
+  name: synthetic-11  # synthetic-<N> for synthetic datasets
+  min_trajectory_length: 54  # Default value, adjust as necessary
+  max_trajectory_length: 54  # Number of q wanted in input + n_y_prompts
+  n_y_prompts: 4 # number of new questions to predict. default: 1
+  max_context_length: 2048  # nb of tokens in context
+  max_n_trajectories: 1000  # 4/5 train, 1/5 test
+
+
+model:
+  name: Qwen/Qwen2.5-7B-Instruct
+  use_cot: False
+  max_cot_tokens: 1024
+  use_chat: True
+  dtype: "torch.bfloat16"
+
+evaluation:
+  batch_size: 20
+  export_results: True
+  export_path: "results/model_outputs"
+
+wandb_tags: ['lbm-3']

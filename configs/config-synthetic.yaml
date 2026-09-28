@@ -1,0 +1,31 @@
+dataset:
+  name: synthetic-11  # synthetic-<N> for synthetic datasets
+  min_trajectory_length: 30  # Default value, adjust as necessary
+  max_trajectory_length: 30
+  max_context_length: 2048  # nb of tokens in context
+  max_n_trajectories: 500  # nb of trajectories to load
+
+
+model:
+  name: Qwen/Qwen2.5-3B-Instruct
+  type: hf
+  use_cot: True
+  max_cot_tokens: 1024
+  use_chat: True
+  dtype: "torch.bfloat16"
+
+training:
+  num_train_epochs: 100
+  per_device_train_batch_size: 2
+  per_device_eval_batch_size: 2
+  logging_steps: 1000
+  eval_strategy: epoch
+  save_strategy: epoch
+  output_dir: ./results
+  logging_dir: ./logs
+
+evaluation:
+  batch_size: 50
+  eval_before: True  # Evaluate the model before training
+
+wandb_tags: None

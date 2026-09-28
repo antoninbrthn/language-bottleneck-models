@@ -1,0 +1,41 @@
+# Environment & secrets
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# Data & results (large files)
+data/*
+!data/synthetic-11/
+!data/synthetic-11/*.csv
+results/
+exports/
+logs/
+wandb/
+finetuned/
+
+# IDE
+.vscode/
+.idea/
+*.code-workspace
+.pytest_cache/
+
+# OS
+.DS_Store
+
+# Training artifacts
+unsloth_compiled_cache/
+grpo_trainer_lora_model/
+
+# Binary / large files
+*.pkl
+*.npy
+*.pstats
+*.tar
+*.zip
+*.snapshot
+*.params

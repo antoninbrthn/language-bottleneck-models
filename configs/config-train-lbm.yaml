@@ -1,0 +1,76 @@
+dataset:
+  name: synthetic-11  # synthetic-<N> for synthetic datasets
+  min_trajectory_length: 70  # Default value, adjust as necessary
+  max_trajectory_length: 70
+  n_y_prompts: 20 # number of new questions to predict
+  max_context_length: 1800  # nb of tokens in context
+  max_n_trajectories: 1000  # nb of trajectories to load: 1200/300 train/test
+
+
+model:
+  type: lbm
+  max_bottleneck_tokens: 128  # default: 128
+  encoder:
+    name: google/gemma-3-12b-it
+    use_cot: False
+    max_cot_tokens: 1024
+  decoder:
+    name: google/gemma-3-27b-it
+    # set_cuda_device: "3"  # to load on a different gpu than the encoder if needed
+    only_certain_answers: False
+    use_cot: False
+    max_cot_tokens: 1024
+    batch_size: 100
+
+
+training:
+  num_train_epochs: 5
+  per_device_train_batch_size: 5
+  per_device_eval_batch_size: 5
+  gradient_accumulation_steps: 1 
+  max_prompt_length: 1900
+  max_completion_length: 128  # same as model.max_bottleneck_tokens
+  num_generations: 5
+  learning_rate: 1e-4
+  beta: 0.04  
+  logging_strategy: 'steps'
+  logging_steps: 10  # log every 10 steps
+  eval_strategy: 'steps'
+  eval_steps: 100  
+  eval_on_start: True  # Evaluate the model before training
+  do_eval: True
+  ### save/checkpointing
+  save_strategy: 'steps'
+  save_steps: 100  # same as eval
+  load_best_model_at_end: True
+  logging_dir: ./logs
+  #### mixed precision params
+  tf32: False
+  bf16: False
+  fp16: False
+  #### optim params
+  optim: adamw_torch  
+  #### other speed/memory tradeoffs
+  gradient_checkpointing: False  # reduce memory but slow down training
+  torch_compile: False  # compile the model for potentially faster training
+
+evaluation:
+  batch_size: 2
+  eval_before: True  # Evaluate the model before training
+
+lora_config:
+  r: 16
+  lora_alpha: 16
+  target_modules: 
+    - "q_proj"
+    - "k_proj"
+    - "v_proj"
+    - "o_proj"
+    - "gate_proj"
+    - "up_proj"
+    - "down_proj"
+  lora_dropout: 0.05
+  bias: "none"
+  task_type: "CAUSAL_LM"
+
+wandb_tags: ["train-lbm-us"]

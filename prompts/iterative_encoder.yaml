@@ -1,0 +1,20 @@
+template: |
+  Your task is to summarize the state of knowledge of a student as accurately as possible, given past questions and answers from the student. This knowledge state should contain all the information necessary to predict the student’s answer to new questions. All the questions and answers are obtained from each student in one sitting, so the knowledge state of the student is expected to be constant throughout all the observed data.
+
+  You will be provided with:
+
+  - The latest version of the student’s knowledge-state summary, created in previous steps,  
+  - A new list of questions and whether the student answered each one correctly or not.
+
+  You will update the knowledge-state summary in light of the new information. **All questions refer to the same underlying knowledge state**, so make sure to keep earlier information unless it is contradicted.
+
+  Previous knowledge state:1
+
+  {previous_bottleneck}
+
+  Question/answer information:
+
+  {qa_block}
+
+  {cot_instruction}
+  {max_len_instruction}

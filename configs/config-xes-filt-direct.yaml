@@ -1,0 +1,29 @@
+dataset:
+  name: XES3G5MFiltered
+  min_trajectory_length: 34  # Default value, adjust as necessary
+  max_trajectory_length: 34
+  n_y_prompts: 4
+  max_context_length: 4096  # nb of tokens in context
+  max_n_trajectories: 1000  # nb of trajectories to load: 800 train/200 test
+  # Optional parameters for filtering
+  session_gap_minutes: 10  # Maximum allowed gap between two consecutive answers (minutes)
+  min_session_questions: 34  # Minimum questions required in a (user, session) group
+  use_translation: True
+  use_test_window: False
+  limit_nrows: null
+
+model:
+  name: Qwen/Qwen2.5-7B-Instruct
+  type: hf
+  use_cot: False
+  max_cot_tokens: 1024
+  use_chat: True
+  dtype: "torch.bfloat16"
+
+
+evaluation:
+  batch_size: 5
+  export_results: True
+  export_path: "results/model_outputs"
+
+wandb_tags: ['xes-filt']

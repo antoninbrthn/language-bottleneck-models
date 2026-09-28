@@ -1,0 +1,5 @@
+template: |
+  Here is some information about a student:
+  {bottleneck}
+
+  {y_prompt} 

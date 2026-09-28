@@ -1,0 +1,30 @@
+# Core
+numpy
+pandas
+scikit-learn
+scipy
+tqdm
+
+# LLM & Deep Learning
+torch
+transformers
+peft
+trl>=0.15
+datasets
+accelerate
+
+# OpenAI API
+openai
+aiohttp
+tiktoken
+
+# Configuration & Logging
+hydra-core
+omegaconf
+wandb
+python-dotenv
+PyYAML
+pydantic
+
+# Optional: Unsloth (for fast LoRA training)
+# unsloth

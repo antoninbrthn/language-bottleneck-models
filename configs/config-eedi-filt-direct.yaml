@@ -1,0 +1,27 @@
+dataset:
+  name: EEDIFiltered
+  min_trajectory_length: 40  # Default value, adjust as necessary
+  max_trajectory_length: 40
+  n_y_prompts: 10
+  max_context_length: 4096  # nb of tokens in context
+  max_n_trajectories: 1500  # nb of trajectories to load: 1200/300 train/test
+  # Optional parameters for filtering
+  # min_answer_seconds: 5  # Minimum answer latency to retain (seconds)
+  # session_gap_minutes: 3  # Maximum allowed gap between two consecutive answers (minutes)
+  # min_session_questions: 40  # Minimum questions required in a (user, session) group
+
+model:
+  name: Qwen/Qwen2.5-7B-Instruct
+  type: hf
+  use_cot: False
+  max_cot_tokens: 1024
+  use_chat: True
+  dtype: "torch.bfloat16"
+
+
+evaluation:
+  batch_size: 10
+  export_results: True
+  export_path: "results/model_outputs"
+
+wandb_tags: ['eedi-filt-1']
